@@ -1,0 +1,19 @@
+#!name = Tự Động Tham Gia TestFlight
+#!desc = Tự Động Theo Dõi Tình Trạng TestFlight Và Tham Gia Ngay Khi Có Sẵn
+#!openUrl = 
+#!author = Lê Thành
+#!homepage = https://github.com/ltd2vn/testflight/
+#!icon = https://raw.githubusercontent.com/ltd2vn/testflight/main/TestFlight.png
+#!input = APP_ID
+#!date = 2024-05-17 12:50:22
+
+[Rule]
+DOMAIN, testflight.apple.com, PROXY
+
+[Script]
+http-request ^https?:\/\/testflight\.apple\.com\/v3\/accounts\/.*\/apps$ script-path = https://raw.githubusercontent.com/ltd2vn/testflight/main/JS/LoonCapture.js, tag = Lấy Data TestFlight
+http-request ^https://testflight.apple.com/join/(.*) script-path = https://raw.githubusercontent.com/ltd2vn/testflight/main/JS/LoonCapture.js, tag = Lấy APP_ID
+cron "*/1 * * * * *" script-path = https://raw.githubusercontent.com/ltd2vn/testflight/main/JS/LoonMain.js, tag = Tự Động Join TestFlight, timeout = 180
+
+[Mitm]
+hostname = testflight.apple.com
